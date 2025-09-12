@@ -8,7 +8,7 @@ const genres = ['All', 'Action', 'Comedy', 'Drama', 'Horror', 'Romance', 'Sci-Fi
 
 const MovieList = () => {
   const dispatch = useDispatch();
-  const { movies, loading, totalPages, currentPage } = useSelector((state) => state.movies);
+  const { movies, loading, totalPages } = useSelector((state) => state.movies);
 
   const [search, setSearch] = useState('');
   const [genre, setGenre] = useState('All');
@@ -20,8 +20,8 @@ const MovieList = () => {
     const filters = {
       search,
       genre: genre !== 'All' ? genre : undefined,
-      year: year || undefined,
-      rating: rating || undefined,
+      year: year ? Number(year) : undefined,
+      rating: rating ? Number(rating) : undefined,
       page,
     };
     dispatch(fetchMovies(filters));
@@ -96,7 +96,7 @@ const MovieList = () => {
             ))}
           </Grid>
           <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
-            <Pagination count={totalPages} page={currentPage} onChange={handlePageChange} color="primary" />
+            <Pagination count={totalPages} page={page} onChange={handlePageChange} color="primary" />
           </Box>
         </>
       )}

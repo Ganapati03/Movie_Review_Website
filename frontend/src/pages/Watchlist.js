@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Container, Typography, Grid, Box, CircularProgress, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 import api from '../services/api';
@@ -15,7 +14,7 @@ const Watchlist = () => {
 
   const fetchWatchlist = async () => {
     try {
-      const response = await api.get('/watchlist');
+      const response = await api.get('/users/me/watchlist');
       setWatchlist(response.data);
     } catch (error) {
       toast.error('Failed to fetch watchlist');
@@ -26,7 +25,7 @@ const Watchlist = () => {
 
   const removeFromWatchlist = async (movieId) => {
     try {
-      await api.delete(`/watchlist/${movieId}`);
+      await api.delete(`/users/me/watchlist/${movieId}`);
       setWatchlist(watchlist.filter(item => item.movieId._id !== movieId));
       toast.success('Removed from watchlist');
     } catch (error) {

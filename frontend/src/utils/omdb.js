@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const OMDB_API_KEY = process.env.REACT_APP_OMDB_API_KEY || '103df37';
+const OMDB_API_KEY = '5841386a'; // Direct API key as provided
 const OMDB_BASE_URL = 'http://www.omdbapi.com/';
 
 export const fetchMovieFromOMDB = async (title) => {
