@@ -65,12 +65,18 @@ A full-stack web application for reviewing movies, built with React frontend and
    ```
 
 4. Create environment variables:
-   - Copy `.env` file and update with your values:
+   - The `.env` file is already created. Update it with your values:
      ```
      MONGO_URI=your_mongodb_connection_string
      JWT_SECRET=your_jwt_secret
      OMDB_API_KEY=your_omdb_api_key
      ```
+
+   - To get a free OMDB API key:
+     1. Go to https://www.omdbapi.com/apikey.aspx
+     2. Sign up for a free account
+     3. Request a free API key (1000 requests/day)
+     4. Replace `OMDB_API_KEY=103df37` in `.env` with your new key
 
 5. Start the backend server:
    ```bash

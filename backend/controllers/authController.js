@@ -55,7 +55,16 @@ const register = async (req, res) => {
       { expiresIn: '7d' },
       (err, token) => {
         if (err) throw err;
-        res.json({ token });
+        res.json({ 
+          token,
+          user: {
+            _id: user._id,
+            username: user.username,
+            email: user.email,
+            profilePicture: user.profilePicture,
+            joinDate: user.joinDate
+          }
+        });
       }
     );
   } catch (err) {
@@ -96,9 +105,31 @@ const login = async (req, res) => {
       { expiresIn: '7d' },
       (err, token) => {
         if (err) throw err;
-        res.json({ token });
+        res.json({ 
+          token,
+          user: {
+            _id: user._id,
+            username: user.username,
+            email: user.email,
+            profilePicture: user.profilePicture,
+            joinDate: user.joinDate
+          }
+        });
       }
     );
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+};
+
+// @desc    Get current user
+// @route   GET /api/auth/me
+// @access  Private
+const getMe = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select('-password');
+    res.json({ user });
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
@@ -108,4 +139,5 @@ const login = async (req, res) => {
 module.exports = {
   register: [validateBody(registerSchema), register],
   login: [validateBody(loginSchema), login],
+  getMe,
 };

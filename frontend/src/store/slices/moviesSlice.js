@@ -15,7 +15,7 @@ export const fetchMovie = createAsyncThunk('movies/fetchMovie', async (id, { rej
     const response = await api.get(`/movies/${id}`);
     return response.data;
   } catch (error) {
-    return rejectWithValue(error.response.data.message);
+    return rejectWithValue(error.response?.data?.message || 'Failed to fetch movie');
   }
 });
 
@@ -65,7 +65,11 @@ const moviesSlice = createSlice({
       })
       .addCase(fetchMovie.fulfilled, (state, action) => {
         state.loading = false;
-        state.currentMovie = action.payload;
+        state.currentMovie = action.payload.movie;
+        // Add reviews to the movie object
+        if (action.payload.reviews) {
+          state.currentMovie.reviews = action.payload.reviews;
+        }
       })
       .addCase(fetchMovie.rejected, (state, action) => {
         state.loading = false;

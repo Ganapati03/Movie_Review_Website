@@ -1,4 +1,4 @@
-require('dotenv').config({ path: '../.env' });
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
@@ -12,6 +12,12 @@ const watchlistRoutes = require('./routes/watchlist');
 const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
+app.set('trust proxy', 1);
+
+if (!process.env.MONGO_URI) {
+  console.error('MONGO_URI environment variable is not defined');
+  process.exit(1);
+}
 
 // Connect to MongoDB
 connectDB();

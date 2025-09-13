@@ -4,6 +4,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import AppInitializer from './components/AppInitializer';
 import Home from './pages/Home';
 import MovieList from './pages/MovieList';
 import MovieDetail from './pages/MovieDetail';
@@ -28,19 +29,21 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Header />
-      <main style={{ minHeight: '80vh', padding: '20px' }}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/movies" element={<MovieList />} />
-          <Route path="/movies/:id" element={<MovieDetail />} />
-          <Route path="/profile" element={<UserProfile />} />
-          <Route path="/watchlist" element={<Watchlist />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-        </Routes>
-      </main>
-      <Footer />
+      <AppInitializer>
+        <Header />
+        <main style={{ minHeight: '80vh', padding: '20px' }}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/movies" element={<MovieList />} />
+            <Route path="/movies/:id" element={<MovieDetail />} />
+            <Route path="/profile/:id" element={<UserProfile />} />
+            <Route path="/watchlist" element={<Watchlist />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+          </Routes>
+        </main>
+        <Footer />
+      </AppInitializer>
     </ThemeProvider>
   );
 }

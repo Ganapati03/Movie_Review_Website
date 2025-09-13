@@ -1,70 +1,20 @@
-# TODO List for Movie Review Platform
+# TODO List
 
-## Project Setup
-- [x] Create project structure with backend/ and frontend/ folders
-- [x] Create .env file with provided environment variables
+## OMDB API Key Setup
+- [x] Get a free OMDB API key from https://www.omdbapi.com/apikey.aspx
+- [ ] Update backend/.env file with the new API key: OMDB_API_KEY=5841386a
+- [ ] Restart the backend server to load the new environment variable
+- [ ] Test the movie listing to ensure live data is fetched instead of mock data
 
-## Backend Setup
-- [x] Create backend/package.json with dependencies
-- [x] Create backend/server.js (main server file)
-- [x] Create backend/config/db.js (MongoDB connection)
-- [x] Create backend/models/User.js
-- [x] Create backend/models/Movie.js
-- [x] Create backend/models/Review.js
-- [x] Create backend/models/Watchlist.js
-- [x] Create backend/middleware/auth.js
-- [x] Create backend/middleware/errorHandler.js
-- [x] Create backend/middleware/validation.js
-- [x] Create backend/controllers/authController.js
-- [x] Create backend/controllers/movieController.js
-- [x] Create backend/controllers/userController.js
-- [x] Create backend/controllers/reviewController.js
-- [x] Create backend/controllers/watchlistController.js
-- [x] Create backend/routes/auth.js
-- [x] Create backend/routes/movies.js
-- [x] Create backend/routes/users.js
-- [x] Create backend/routes/reviews.js
-- [x] Create backend/routes/watchlist.js
+## Testing Movie Listing Functionality
+- [ ] Verify movies load on the frontend
+- [ ] Test pagination functionality
+- [ ] Test search functionality
+- [ ] Test movie detail pages
+- [ ] Ensure no 401 errors in backend logs
+- [x] Improve backend movie fetching logic for better pagination and filtering with live OMDB data
 
-## Frontend Setup
-- [x] Create frontend/package.json with dependencies
-- [x] Create frontend/src/index.js
-- [x] Create frontend/src/App.js
-- [x] Create frontend/src/store/store.js (Redux Toolkit)
-- [x] Create frontend/src/services/api.js (Axios setup)
-- [x] Create frontend/src/components/Header.js
-- [x] Create frontend/src/components/Footer.js
-- [x] Create frontend/src/components/MovieCard.js
-- [x] Create frontend/src/components/ReviewForm.js
-- [x] Create frontend/src/components/StarRating.js
-- [x] Create frontend/src/pages/Home.js
-- [x] Create frontend/src/pages/MovieList.js
-- [x] Create frontend/src/pages/MovieDetail.js
-- [x] Create frontend/src/pages/UserProfile.js
-- [x] Create frontend/src/pages/Watchlist.js
-- [x] Create frontend/src/pages/Login.js
-- [x] Create frontend/src/pages/Register.js
-- [x] Create frontend/src/utils/omdb.js (OMDB API integration)
-- [x] Add routing in App.js
-- [x] Implement state management slices (auth, movies, users)
-
-## Integration and Features
-- [x] Integrate OMDB API for movie data
-- [x] Add loading states and error handling
-- [x] Add toast notifications
-- [x] Ensure responsive UI with Material UI
-- [x] Implement search and filters in MovieList
-- [x] Add pagination to MovieList
-
-## Documentation
-- [x] Create README.md with setup instructions
-
-## Testing and Deployment
-- [x] Install backend dependencies
-- [x] Install frontend dependencies
-- [x] Run backend server
-- [x] Run frontend dev server
-- [x] Test API endpoints
-- [x] Test UI functionality
-- [x] Verify OMDB integration
-- [x] Check responsiveness
+## Optional Improvements
+- [ ] Expand mock data if needed for demo purposes
+- [ ] Add error handling for API failures
+- [ ] Implement caching for better performance

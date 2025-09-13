@@ -22,6 +22,24 @@ export const register = createAsyncThunk('auth/register', async ({ username, ema
   }
 });
 
+export const loadUser = createAsyncThunk('auth/loadUser', async (_, { rejectWithValue }) => {
+  try {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      return rejectWithValue('No token found');
+    }
+    
+    // Set the token in the API headers
+    api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    
+    const response = await api.get('/auth/me');
+    return response.data;
+  } catch (error) {
+    localStorage.removeItem('token');
+    return rejectWithValue(error.response?.data?.message || 'Failed to load user');
+  }
+});
+
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
@@ -71,6 +89,20 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
         toast.error(action.payload);
+      })
+      .addCase(loadUser.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(loadUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload.user;
+        state.isAuthenticated = true;
+      })
+      .addCase(loadUser.rejected, (state, action) => {
+        state.loading = false;
+        state.user = null;
+        state.isAuthenticated = false;
+        state.error = action.payload;
       });
   },
 });
