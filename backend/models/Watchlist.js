@@ -7,9 +7,16 @@ const watchlistSchema = new mongoose.Schema({
     required: true,
   },
   movieId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Movie',
+    type: String, // OMDB movie ID (string)
     required: true,
+  },
+  movieTitle: {
+    type: String,
+    required: true,
+  },
+  moviePoster: {
+    type: String,
+    default: '',
   },
   dateAdded: {
     type: Date,

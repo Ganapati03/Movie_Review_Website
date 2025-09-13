@@ -1,9 +1,18 @@
 import React from 'react';
 import { Box, Typography, Container, Grid, Link } from '@mui/material';
+import { useTheme } from '../contexts/ThemeContext';
 
 const Footer = () => {
+  const { isDarkMode } = useTheme();
+  
   return (
-    <Box sx={{ bgcolor: '#1976d2', color: 'white', p: 6, mt: 'auto' }} component="footer">
+    <Box sx={{ 
+      bgcolor: isDarkMode ? 'grey.900' : 'primary.main', 
+      color: 'white', 
+      p: 6, 
+      mt: 'auto',
+      borderTop: isDarkMode ? '1px solid #404040' : 'none'
+    }} component="footer">
       <Container maxWidth="lg">
         <Grid container spacing={4}>
           <Grid item xs={12} sm={4}>

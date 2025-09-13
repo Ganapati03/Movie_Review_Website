@@ -75,21 +75,16 @@ const Watchlist = () => {
         <Grid container spacing={3}>
           {watchlist.map((item) => (
             <Grid item xs={12} sm={6} md={4} lg={3} key={item._id}>
-              <Card sx={{ 
+              <Card className="movie-card" sx={{ 
                 height: '100%', 
                 display: 'flex', 
-                flexDirection: 'column',
-                transition: 'transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
-                '&:hover': {
-                  transform: 'translateY(-4px)',
-                  boxShadow: 4,
-                }
+                flexDirection: 'column'
               }}>
                 <CardMedia
                   component="img"
                   height="300"
-                  image={item.movieId.posterUrl || 'https://via.placeholder.com/200x300?text=No+Image'}
-                  alt={item.movieId.title}
+                  image={item.moviePoster || 'https://via.placeholder.com/200x300?text=No+Image'}
+                  alt={item.movieTitle}
                   sx={{ objectFit: 'cover' }}
                 />
                 <CardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
@@ -101,28 +96,19 @@ const Watchlist = () => {
                     WebkitLineClamp: 2,
                     WebkitBoxOrient: 'vertical',
                   }}>
-                    {item.movieId.title}
+                    {item.movieTitle}
                   </Typography>
                   
                   <Typography variant="body2" color="text.secondary" gutterBottom>
-                    {item.movieId.releaseYear} • {Array.isArray(item.movieId.genre) ? item.movieId.genre.join(', ') : item.movieId.genre}
+                    Added on {new Date(item.dateAdded).toLocaleDateString()}
                   </Typography>
-
-                  {item.movieId.averageRating > 0 && (
-                    <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                      <StarRating rating={item.movieId.averageRating} size="small" />
-                      <Typography variant="body2" sx={{ ml: 1 }}>
-                        ({item.movieId.reviewCount || 0})
-                      </Typography>
-                    </Box>
-                  )}
 
                   <Box sx={{ mt: 'auto', display: 'flex', gap: 1 }}>
                     <Button
                       size="small"
                       variant="contained"
                       component={Link}
-                      to={`/movies/${item.movieId._id}`}
+                      to={`/movies/${item.movieId}`}
                       startIcon={<ViewIcon />}
                       sx={{ flex: 1 }}
                     >
@@ -131,7 +117,7 @@ const Watchlist = () => {
                     <IconButton
                       size="small"
                       color="error"
-                      onClick={() => handleRemoveFromWatchlist(item.movieId._id)}
+                      onClick={() => handleRemoveFromWatchlist(item.movieId)}
                       sx={{ 
                         backgroundColor: 'error.light',
                         color: 'white',

@@ -24,11 +24,13 @@ import {
   Bookmark as BookmarkIcon,
   AccountCircle as AccountCircleIcon,
   Logout as LogoutIcon,
-  Menu as MenuIcon
+  Menu as MenuIcon,
+  RateReview as RateReviewIcon
 } from '@mui/icons-material';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../store/slices/authSlice';
+import ThemeToggle from './ThemeToggle';
 
 const Header = () => {
   const { isAuthenticated, user } = useSelector((state) => state.auth);
@@ -68,6 +70,15 @@ const Header = () => {
         <ListItem button component={Link} to="/movies">
           <ListItemIcon><MovieIcon /></ListItemIcon>
           <ListItemText primary="Movies" />
+        </ListItem>
+        <ListItem button component={Link} to="/reviews">
+          <ListItemIcon><RateReviewIcon /></ListItemIcon>
+          <ListItemText primary="Reviews" />
+        </ListItem>
+        <ListItem>
+          <Box sx={{ display: 'flex', alignItems: 'center', width: '100%', px: 2 }}>
+            <ThemeToggle variant="switch" />
+          </Box>
         </ListItem>
         {isAuthenticated ? (
           <>
@@ -147,6 +158,18 @@ const Header = () => {
               >
                 Movies
               </Button>
+              
+              <Button 
+                color="inherit" 
+                component={Link} 
+                to="/reviews"
+                startIcon={<RateReviewIcon />}
+                sx={{ fontWeight: 'medium' }}
+              >
+                Reviews
+              </Button>
+              
+              <ThemeToggle variant="icon" />
               
               {isAuthenticated ? (
                 <>

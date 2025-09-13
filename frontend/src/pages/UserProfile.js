@@ -53,7 +53,7 @@ const UserProfile = () => {
       }
     };
     fetchUserProfile();
-  }, [id]);
+  }, [id, toast]);
 
   const handleChange = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value });

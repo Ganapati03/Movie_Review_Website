@@ -17,9 +17,13 @@ const ReviewForm = ({ movieId, onReviewAdded }) => {
       toast.error('Please select a rating');
       return;
     }
+    if (!reviewText.trim()) {
+      toast.error('Please write a review');
+      return;
+    }
     setLoading(true);
     try {
-      const response = await api.post(`/movies/${movieId}/reviews`, {
+      const response = await api.post(`/reviews/${movieId}`, {
         rating,
         reviewText,
       });

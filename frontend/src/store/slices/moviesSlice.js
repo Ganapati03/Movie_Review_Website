@@ -21,7 +21,7 @@ export const fetchMovie = createAsyncThunk('movies/fetchMovie', async (id, { rej
 
 export const addReview = createAsyncThunk('movies/addReview', async ({ movieId, review }, { rejectWithValue }) => {
   try {
-    const response = await api.post(`/movies/${movieId}/reviews`, review);
+    const response = await api.post(`/reviews/${movieId}`, review);
     return { movieId, review: response.data };
   } catch (error) {
     return rejectWithValue(error.response.data.message);

@@ -1,12 +1,42 @@
 const Review = require('../models/Review');
 const Movie = require('../models/Movie');
 
+// @desc    Get all reviews (public)
+// @route   GET /api/reviews
+// @access  Public
+const getAllReviews = async (req, res) => {
+  try {
+    const { page = 1, limit = 10 } = req.query;
+    const skip = (page - 1) * limit;
+    
+    const reviews = await Review.find()
+      .populate('userId', 'username')
+      .sort({ timestamp: -1 })
+      .skip(skip)
+      .limit(parseInt(limit));
+    
+    const total = await Review.countDocuments();
+    
+    res.json({
+      reviews,
+      totalPages: Math.ceil(total / limit),
+      currentPage: parseInt(page),
+      total
+    });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+};
+
 // @desc    Get reviews for a movie
-// @route   GET /api/movies/:id/reviews
+// @route   GET /api/reviews/:movieId
 // @access  Public
 const getReviews = async (req, res) => {
   try {
-    const reviews = await Review.find({ movieId: req.params.id }).populate('userId', 'username');
+    const reviews = await Review.find({ movieId: req.params.movieId })
+      .populate('userId', 'username')
+      .sort({ timestamp: -1 });
     res.json(reviews);
   } catch (err) {
     console.error(err.message);
@@ -15,16 +45,25 @@ const getReviews = async (req, res) => {
 };
 
 // @desc    Add review
-// @route   POST /api/movies/:id/reviews
+// @route   POST /api/reviews/:movieId
 // @access  Private
 const addReview = async (req, res) => {
   try {
     const { rating, reviewText } = req.body;
 
+    // Validate input
+    if (!rating || rating < 1 || rating > 5) {
+      return res.status(400).json({ message: 'Rating must be between 1 and 5' });
+    }
+
+    if (!reviewText || reviewText.trim().length === 0) {
+      return res.status(400).json({ message: 'Review text is required' });
+    }
+
     // Check if user already reviewed this movie
     const existingReview = await Review.findOne({
       userId: req.user.id,
-      movieId: req.params.id,
+      movieId: req.params.movieId,
     });
 
     if (existingReview) {
@@ -33,17 +72,17 @@ const addReview = async (req, res) => {
 
     const review = new Review({
       userId: req.user.id,
-      movieId: req.params.id,
+      movieId: req.params.movieId,
       rating,
-      reviewText,
+      reviewText: reviewText.trim(),
     });
 
     await review.save();
 
-    // Update movie average rating
-    await updateMovieRating(req.params.id);
+    // Populate the review with user info
+    const populatedReview = await Review.findById(review._id).populate('userId', 'username');
 
-    res.status(201).json(review);
+    res.status(201).json(populatedReview);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
@@ -117,6 +156,7 @@ const updateMovieRating = async (movieId) => {
 };
 
 module.exports = {
+  getAllReviews,
   getReviews,
   addReview,
   updateReview,

@@ -1,0 +1,82 @@
+/* Dark mode CSS variables and transitions */
+:root {
+  --transition-duration: 0.3s;
+  --transition-timing: ease-in-out;
+}
+
+/* Smooth transitions for theme changes */
+* {
+  transition: background-color var(--transition-duration) var(--transition-timing),
+              color var(--transition-duration) var(--transition-timing),
+              border-color var(--transition-duration) var(--transition-timing),
+              box-shadow var(--transition-duration) var(--transition-timing);
+}
+
+/* Dark theme specific styles */
+.dark-theme {
+  color-scheme: dark;
+}
+
+/* Custom scrollbar for dark mode */
+.dark-theme ::-webkit-scrollbar {
+  width: 8px;
+}
+
+.dark-theme ::-webkit-scrollbar-track {
+  background: #2d2d2d;
+}
+
+.dark-theme ::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 4px;
+}
+
+.dark-theme ::-webkit-scrollbar-thumb:hover {
+  background: #777;
+}
+
+/* Light theme scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Smooth theme toggle animation */
+.theme-toggle {
+  transition: all 0.3s ease-in-out;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.05);
+}
+
+/* Card hover effects for both themes */
+.movie-card {
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.movie-card:hover {
+  transform: translateY(-4px);
+}
+
+/* Dark mode specific card shadows */
+.dark-theme .movie-card:hover {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Light mode specific card shadows */
+.movie-card:hover {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}

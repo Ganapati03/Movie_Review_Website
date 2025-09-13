@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { 
@@ -27,7 +27,7 @@ import { fetchMovie } from '../store/slices/moviesSlice';
 import { addToWatchlist, removeFromWatchlist } from '../store/slices/watchlistSlice';
 import ReviewForm from '../components/ReviewForm';
 import StarRating from '../components/StarRating';
-import { useState } from 'react';
+import ReviewsWidget from '../components/ReviewsWidget';
 
 const MovieDetail = () => {
   const { id } = useParams();
@@ -37,7 +37,7 @@ const MovieDetail = () => {
   const { items: watchlist } = useSelector((state) => state.watchlist);
   const [showReviewForm, setShowReviewForm] = useState(false);
 
-  const isInWatchlist = watchlist.some(item => item.movieId._id === id);
+  const isInWatchlist = watchlist.some(item => item.movieId === id);
 
   useEffect(() => {
     dispatch(fetchMovie(id));
@@ -51,7 +51,12 @@ const MovieDetail = () => {
     if (isInWatchlist) {
       dispatch(removeFromWatchlist({ userId: user._id, movieId: id }));
     } else {
-      dispatch(addToWatchlist({ userId: user._id, movieId: id }));
+      dispatch(addToWatchlist({ 
+        userId: user._id, 
+        movieId: id,
+        movieTitle: currentMovie?.title || 'Unknown Movie',
+        moviePoster: currentMovie?.posterUrl || ''
+      }));
     }
   };
 
@@ -212,18 +217,20 @@ const MovieDetail = () => {
         </Card>
       )}
 
-      <Card sx={{ mt: 4 }}>
-        <CardContent>
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 3 }}>
-            <Typography variant="h5" component="h2" sx={{ fontWeight: 'bold' }}>
-              Reviews
-            </Typography>
-            <Chip 
-              label={`${currentMovie.reviews?.length || 0} reviews`} 
-              color="primary" 
-              variant="outlined"
-            />
-          </Box>
+      <Grid container spacing={4} sx={{ mt: 4 }}>
+        <Grid item xs={12} md={8}>
+          <Card>
+            <CardContent>
+              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 3 }}>
+                <Typography variant="h5" component="h2" sx={{ fontWeight: 'bold' }}>
+                  Reviews for {currentMovie.title}
+                </Typography>
+                <Chip 
+                  label={`${currentMovie.reviews?.length || 0} reviews`} 
+                  color="primary" 
+                  variant="outlined"
+                />
+              </Box>
           
           {currentMovie.reviews?.length > 0 ? (
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
@@ -259,8 +266,19 @@ const MovieDetail = () => {
               </Typography>
             </Paper>
           )}
-        </CardContent>
-      </Card>
+            </CardContent>
+          </Card>
+        </Grid>
+        
+        <Grid item xs={12} md={4}>
+          <ReviewsWidget 
+            title="Other Recent Reviews" 
+            limit={5} 
+            showAvatar={true}
+            compact={false}
+          />
+        </Grid>
+      </Grid>
     </Container>
   );
 };

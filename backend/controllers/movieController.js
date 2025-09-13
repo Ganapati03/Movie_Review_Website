@@ -126,7 +126,7 @@ const getMovie = async (req, res) => {
       return res.status(404).json({ message: 'Movie not found' });
     }
 
-    const reviews = await Review.find({ movieId: req.params.id }).populate('user', 'username');
+    const reviews = await Review.find({ movieId: req.params.id }).populate('userId', 'username');
 
     // Calculate average rating from reviews
     let averageRating = 0;

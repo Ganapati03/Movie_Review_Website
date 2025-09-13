@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Container, Typography, TextField, Button, Box, CircularProgress } from '@mui/material';
 import { register, clearError } from '../store/slices/authSlice';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
 
 const Register = () => {
   const dispatch = useDispatch();

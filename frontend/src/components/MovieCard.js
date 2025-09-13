@@ -11,7 +11,7 @@ const MovieCard = ({ movie }) => {
   const { user, isAuthenticated } = useSelector((state) => state.auth);
   const { items: watchlist } = useSelector((state) => state.watchlist);
   
-  const isInWatchlist = watchlist.some(item => item.movieId._id === movie._id);
+  const isInWatchlist = watchlist.some(item => item.movieId === movie._id);
 
   const handleWatchlistToggle = () => {
     if (!isAuthenticated || !user || !user._id) {
@@ -21,20 +21,20 @@ const MovieCard = ({ movie }) => {
     if (isInWatchlist) {
       dispatch(removeFromWatchlist({ userId: user._id, movieId: movie._id }));
     } else {
-      dispatch(addToWatchlist({ userId: user._id, movieId: movie._id }));
+      dispatch(addToWatchlist({ 
+        userId: user._id, 
+        movieId: movie._id,
+        movieTitle: movie.title,
+        moviePoster: movie.posterUrl
+      }));
     }
   };
 
   return (
-    <Card sx={{ 
+    <Card className="movie-card" sx={{ 
       height: '100%', 
       display: 'flex', 
-      flexDirection: 'column',
-      transition: 'transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
-      '&:hover': {
-        transform: 'translateY(-4px)',
-        boxShadow: 4,
-      }
+      flexDirection: 'column'
     }}>
       <Box sx={{ position: 'relative' }}>
         <CardMedia

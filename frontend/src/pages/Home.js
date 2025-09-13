@@ -1,7 +1,8 @@
 import React from 'react';
-import { Container, Typography, Box, Button } from '@mui/material';
+import { Container, Typography, Box, Button, Grid } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { Movie as MovieIcon, Star as StarIcon } from '@mui/icons-material';
+import PublicReviewsPanel from '../components/PublicReviewsPanel';
 
 const Home = () => {
   return (
@@ -68,6 +69,33 @@ const Home = () => {
             </Typography>
           </Box>
         </Box>
+      </Box>
+
+      {/* Public Reviews Panel */}
+      <Box sx={{ mt: 8, mb: 4 }}>
+        <Typography variant="h4" component="h2" gutterBottom sx={{ textAlign: 'center', fontWeight: 'bold', mb: 4 }}>
+          Latest Reviews from Our Community
+        </Typography>
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={8}>
+            <PublicReviewsPanel 
+              title="Recent Reviews" 
+              limit={6} 
+              showExpandButton={true}
+              maxHeight={500}
+              variant="panel"
+            />
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <PublicReviewsPanel 
+              title="Quick Reviews" 
+              limit={4} 
+              showExpandButton={false}
+              maxHeight={400}
+              variant="compact"
+            />
+          </Grid>
+        </Grid>
       </Box>
     </Container>
   );
