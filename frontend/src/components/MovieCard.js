@@ -27,7 +27,6 @@ const MovieCard = ({ movie }) => {
 
   return (
     <Card sx={{ 
-      maxWidth: 345, 
       height: '100%', 
       display: 'flex', 
       flexDirection: 'column',

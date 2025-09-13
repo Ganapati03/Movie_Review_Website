@@ -1,7 +1,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
+import { Container, CssBaseline } from '@mui/material';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import AppInitializer from './components/AppInitializer';
@@ -31,7 +31,7 @@ function App() {
       <CssBaseline />
       <AppInitializer>
         <Header />
-        <main style={{ minHeight: '80vh', padding: '20px' }}>
+        <Container component="main" sx={{ minHeight: '80vh', py: 3 }}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/movies" element={<MovieList />} />
@@ -41,7 +41,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
           </Routes>
-        </main>
+        </Container>
         <Footer />
       </AppInitializer>
     </ThemeProvider>

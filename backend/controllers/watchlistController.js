@@ -40,7 +40,8 @@ const addToWatchlist = async (req, res) => {
     });
 
     await watchlistItem.save();
-    res.status(201).json(watchlistItem);
+    const populatedItem = await watchlistItem.populate('movieId');
+    res.status(201).json(populatedItem);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
